@@ -5,14 +5,14 @@ const express    = require('express'),
       morgan     = require('morgan'),
       port       = process.env.PORT || 8081
 
+require('./src/config/connection')
+
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.post('/register', (req,res) =>{
-    res.send({message: `Oi ${req.body.name}, Voçê foi registrado! Sua senha é ${req.body.password}`})
-})
+require('./src/routes/index')(app)
 
 app.listen(port, () =>{
-    console.log('Servidor rodando em localhost:' + port)
+    console.log('Server running on localhost:' + port)
 })
