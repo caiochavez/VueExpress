@@ -33,4 +33,7 @@ export default {
 .toolbar__title{
   color: white;
 }
+.danger-alert{
+  color: red;
+}
 </style>
