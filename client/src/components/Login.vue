@@ -6,7 +6,7 @@
         <div slot="hello">
           <v-text-field name="email" type="email" v-model="email" label="Email"></v-text-field>
           <v-text-field name="password" type="password" v-model="password" label="Senha"></v-text-field>
-          <div class="error" v-html="error" />
+          <div class="danger-alert" v-html="error" />
           <br>
           <v-btn @click="login" color="primary" dark>Entrar</v-btn>
         </div>
@@ -50,7 +50,5 @@ export default {
 </script>
 
 <style scoped>
-.error{
-  color: red
-}
+
 </style>

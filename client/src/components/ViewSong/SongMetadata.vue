@@ -1,16 +1,8 @@
 <template>
 
-  <v-layout column>
-    <v-flex xs6 offset-xs3>
-      <panel title="Músicas">
-        <v-btn slot="action" @click="navigateTo({name: 'CreateSong'})" fab medium absolute right middle>
-          <slot name="action"></slot>
-          <v-icon>add</v-icon>
-          <!--<i class="material-icons">add</i>-->
-        </v-btn>          
-        <div slot="hello">
-          <div class="song" v-for="song in songs" :key="song.id">
-            <v-layout>
+  <panel title="Dados da música">
+        <div id="div" slot="hello">
+          <v-layout>
               <v-flex xs6>
                 <div class="song-title">
                   {{song.title}}
@@ -21,47 +13,40 @@
                 <div class="song-album">
                   {{song.album}}
                 </div>
-                <v-btn color="primary" @click="navigateTo({name: 'Song', params: {songId: song._id}})">Ver</v-btn>
+
+                <v-btn color="primary" @click="navigateTo({name: 'EditSong', params: {songId: song._id}})">Editar</v-btn>
 
               </v-flex>
               <v-flex xs6>
                 <img class="album-image" :src="song.albumImage"/>
               </v-flex>
             </v-layout>
-          </div>
-        </div>    
-      </panel>  
-    </v-flex>
-  </v-layout>
+        </div>
+      </panel>
 
 </template>
 
 <script>
-import Panel from './Panel'
-import SongsService from '../services/SongsService'
+import Panel from '../Panel'
 export default {
+  props: [
+    'song'
+  ],
   components: {
     Panel
-  },
-  data () {
-    return {
-      songs: null
-    }
   },
   methods: {
     navigateTo (route) {
       this.$router.push(route)
     }
-  },
-  async mounted () {
-    this.songs = (await SongsService.index()).data
   }
 }
 </script>
 
 <style scoped>
 .album-image{
-  width: 70%;
+  width: 80%;
+  height: 65%;
   margin: 0 auto;
 }
 .song{
@@ -77,5 +62,11 @@ export default {
 }
 .song-album{
   font-size: 18px;
+}
+#div{
+  border: none;
+  height: 305px;
+  overflow: auto;
+  padding: 20px;
 }
 </style>

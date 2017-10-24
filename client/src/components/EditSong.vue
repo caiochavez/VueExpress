@@ -1,7 +1,8 @@
 <template>
+  
   <v-layout>
     <v-flex xs4>
-      <panel title="Adicionar Música">
+      <panel title="Editar Música">
         <div slot="hello">
           <v-text-field label="Título" v-model="song.title" required :rules="[required]"></v-text-field>
           <v-text-field label="Artista" v-model="song.artist" required :rules="[required]"></v-text-field>
@@ -20,9 +21,10 @@
         </div>
       </panel>
       <div class="danger-alert" v-if="error">{{error}}</div>
-      <v-btn dark @click="create" color="primary">Adicionar Música</v-btn>
+      <v-btn dark @click="save" color="primary">Salvar Música</v-btn>
     </v-flex>
   </v-layout>
+
 </template>
 
 <script>
@@ -45,25 +47,35 @@ export default {
       error: null
     }
   },
-  components: {
-    Panel
-  },
   methods: {
-    async create () {
+    async save () {
+      /*
       this.error = null
       const areAllFieldsFilledIn = Object.keys(this.song).every(key => !!this.song[key])
       if (!areAllFieldsFilledIn) {
         this.error = 'Please fill in all the required fields.'
         return
       }
-
+      */
+      const songId = this.$store.state.route.params.songId
       try {
-        await SongsService.post(this.song)
-        this.$router.push({name: 'Songs'})
+        await SongsService.put(this.song)
+        this.$router.push({name: 'Songs', params: {songId: songId}})
       } catch (err) {
         console.log(err)
       }
     }
+  },
+  async mounted () {
+    try {
+      const songId = this.$store.state.route.params.songId
+      this.song = (await SongsService.show(songId)).data
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  components: {
+    Panel
   }
 }
 </script>
@@ -71,3 +83,4 @@ export default {
 <style scoped>
 
 </style>
+

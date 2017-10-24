@@ -27,13 +27,13 @@ module.exports = {
             const {email, password} = req.body
             const user = await User.findOne({email: email})
             if(!user){
-                return res.send(403).send({error: 'The login information was incorrect'})
+                return res.send(403).send({error: 'As informações de login estão incorretas!'})
             }
 
             const UserObj = new User()
             const isPasswordValid = await UserObj.comparePassword(password, user.password)
             if(!isPasswordValid){
-                return res.status(403).send({error: 'The login information was incorrect'})
+                return res.status(403).send({error: 'As informações de login estão incorretas!'})
             }
 
             res.status(200).send({
