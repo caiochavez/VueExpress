@@ -1,0 +1,1 @@
+web: node client/build/build.js && node server/app.js
